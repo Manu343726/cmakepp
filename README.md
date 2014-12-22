@@ -2,7 +2,7 @@
 
 ## A CMake Enhancement Suite
 
-[![Build Status](https://travis-ci.org/toeb/oo-cmake.png?branch=devel)](https://travis-ci.org/toeb/oo-cmake)
+[![Build Status](https://travis-ci.org/manu343726/oo-cmake.png?branch=devel)](https://travis-ci.org/manu343726/oo-cmake)
 [![Project Stats](https://www.ohloh.net/p/oo-cmake/widgets/project_thin_badge.gif)](https://www.ohloh.net/p/oo-cmake)
 objects, methods, functions, maps, inheritance, parsers, lists, process management,  ...
 # Installing
