@@ -27,7 +27,7 @@ after_failure: cmake -P build/after_failure.cmake
 after_script: cmake -P build/after_script.cmake
 deploy:
   provider: biicode
-  user: Manu343726
+  user: manu343726
   password:
     secure: ZBdHcI8HEKMSBZbx5xWT5d7iIzm6db8YDibt7TNC9xM3B30+/D+oFXkvMquxp2cYuhhU2cX+IAwLA4AhJmbYzDvUHnIA+7fJjO8DFngf933cv7lO+Wu/pbEN9gmn/nNxR9zZ1kQfH627gWaehq0MQEhXyLebTzDjY3u1h55PIpU=
   skip_cleanup: true #The biicode block is generated during build, don't discard build changes!
