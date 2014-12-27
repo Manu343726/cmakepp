@@ -20,6 +20,7 @@ install:
 script:
 - bii init
 - bii open manu343726/oo-cmake
+- echo "" > blocks/manu343726/oo-cmake/CMakeLists.txt #Empty CMakeLists.txt to override default biicode one
 - rsync -av --exclude="blocks" --exclude="bii" --exclude=".git" --exclude=".gitignore" . blocks/manu343726/oo-cmake
 - cmake -P build/script.cmake
 after_success: cmake -P build/after_success.cmake
