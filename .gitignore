@@ -16,3 +16,6 @@
 # oocmake temp dir
 tmp
 bin
+
+# biicode project metadata
+/bii
