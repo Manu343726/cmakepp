@@ -1,14 +1,29 @@
-![cps logo](/logo.png "cps logo")
+![cps logo](https://raw.githubusercontent.com/toeb/oo-cmake/master/logo.png "cps logo")
 
 ## A CMake Enhancement Suite
 
 [![Build Status](https://travis-ci.org/Manu343726/oo-cmake.svg?branch=master)](https://travis-ci.org/Manu343726/oo-cmake)
 [![Project Stats](https://www.ohloh.net/p/oo-cmake/widgets/project_thin_badge.gif)](https://www.ohloh.net/p/oo-cmake)
+[![biicode block](https://img.shields.io/badge/manu343726%2Foo--cmake-DEV%3A0-yellow.svg?style=flat)](https://www.biicode.com/manu343726/oo-cmake)
 objects, methods, functions, maps, inheritance, parsers, lists, process management,  ...
 # Installing
 
 Download the code and include `oo-cmake.cmake` in your `CMakeLists.txt` (or other cmake script)
 be sure to use an up to date version of cmake. `oo-cmake` requires cmake version `>=2.8.7` 
+
+## With biicode
+
+Just include `oo-cmake.cmake` in your CMakeLists file:
+
+```
+include(manu343726/oo-cmake/oo-cmake)
+```
+
+Then make biicode find and solve dependencies:
+
+```
+$ bii find
+```
 
 # Usage
 Look through the files in the package.  Most functions will be commented and the other's usage can be inferred.  All functions are avaiable as soon as you include the oo-cmake.cmake file.
