@@ -4,7 +4,7 @@
 
 [![Build Status](https://travis-ci.org/Manu343726/oo-cmake.svg?branch=master)](https://travis-ci.org/Manu343726/oo-cmake)
 [![Project Stats](https://www.ohloh.net/p/oo-cmake/widgets/project_thin_badge.gif)](https://www.ohloh.net/p/oo-cmake)
-[![biicode block](https://img.shields.io/badge/manu343726%2Foo--cmake-DEV%3A0-yellow.svg?style=flat)](https://www.biicode.com/manu343726/oo-cmake)
+[![biicode block](https://img.shields.io/badge/manu343726%2Foo--cmake-DEV%3A0-yellow.svg?style=flat)](https://www.biicode.com/manu343726/oo-cmake)  
 objects, methods, functions, maps, inheritance, parsers, lists, process management,  ...
 # Installing
 
@@ -15,15 +15,11 @@ be sure to use an up to date version of cmake. `oo-cmake` requires cmake version
 
 Just include `oo-cmake.cmake` in your CMakeLists file:
 
-```
-include(manu343726/oo-cmake/oo-cmake)
-```
+    include(manu343726/oo-cmake/oo-cmake)
 
 Then make biicode find and solve dependencies:
 
-```
-$ bii find
-```
+    $ bii find
 
 # Usage
 Look through the files in the package.  Most functions will be commented and the other's usage can be inferred.  All functions are avaiable as soon as you include the oo-cmake.cmake file.
