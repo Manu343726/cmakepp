@@ -3,7 +3,7 @@
 
 Hi! I'm Manu Sánchez, from the biicode team.  
 
-I'm working intensively with CMake scripts and I find your library very useful to me. Maps, function calls, etc; features that make feasible writing complex CMake scripts without going crazy!
+I'm working intensively with CMake scripts and I find your library so useful to me. Maps, function calls, etc; features that make feasible writing complex CMake scripts without going crazy!
 
 biicode is a file-based dependency manager for C and C++, in the same spirit of Java's Maven and Maven Central or Python's pip. The tool uses CMake under the hood to process builds, so to setup a biicode *block** you should play a bit with `CMakeLists.txt` files. *A block is our unit of code sharing, think of it as a package.*    
 Here's an example, part of the `CMakeLists.txt` file of our [Box2D block](https://www.biicode.com/erincatto/erincatto/box2d/master/10):
@@ -43,7 +43,7 @@ I hope you like it.
 
 ## oo-cmake changes
 
-I tried not to touch your codebase at all, but use Travis CI to build and publish the block from your sources. So the only changes this pull request has should be on the `.travis.yml` file (Among other minor changes on the README and the .gitignore).
+I tried not to touch your codebase at all, but use Travis CI to build and publish the block from your sources. So the only changes I propose you should be on the `.travis.yml` file (Among other minor changes on the README).
 
 ### The block
 
@@ -290,9 +290,3 @@ deploy:
 ## That's all!  
 
 Feel free to ask me whatever question you want to, use the comments system bellow if you like.
-
-
-        
-
-          
-         
