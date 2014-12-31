@@ -210,9 +210,9 @@ Let's see how you can setup your project to deploy a biicode block automatically
 
 ### How to create your oo-cmake block
 
-*You can download our client from [here]()*.
+*You can download our client from [here](https://www.biicode.com/downloads)*.
 
-1. First **[create a biicode account]()**.
+1. First **[create a biicode account](https://www.biicode.com/accounts/signup)**.
 2. **Set up a new biicode project localy**. This will be used to create and set   up the block:
    
         $ bii init oo-cmake-setup
