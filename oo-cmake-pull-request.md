@@ -47,14 +47,15 @@ I tried not to touch your codebase at all, but use Travis CI to build and publis
 
 ### The block
 
-The idea is to have a biicode block with all your sources, where the users access the functionality via `include(manu343726/oo-cmake/oo-cmake)`. Check the block [here](https://www.biicode.com/manu343726/oo-cmake).
+The idea is to have a biicode block with all your sources, while users access functionality via `include(manu343726/oo-cmake/oo-cmake)`. Check the block [here](https://www.biicode.com/manu343726/oo-cmake).
 
 ### Dependency management
 
-biicode is a file-based dependency management system, that means that biicode uses files as its unit of dependency. So if you use `foo.cpp` from a `manu343726/lib` block, biicode will download the `foo.cpp` file only, not the entire `manu343726/lib` block. This is interesting for large libraries and codebases, because only the `#include`d files will be downloaded.
+biicode is a file-based dependency management system. That means biicode uses files as its unit of dependency. So if you use `foo.cpp` from a `manu343726/lib` block, biicode will download the `foo.cpp` file only, not the entire `manu343726/lib` block. This is interesting for large libraries and codebases, because only the `#include`d files will be downloaded.
 
-But that does not work in this case. Your `oo-cmake.cmake` file depends in many CMake scripts and some extra C++ files that should be retrieved too, but you are not using our `include(user/block/script)` convention (And I'm not going to change your sources) so this does not work directly.
-However biicode allows you to specify dependencies manually in the `biicode.conf` file, the configuration file of the block:
+But that does not work in this case. Your `oo-cmake.cmake` file depends in many CMake scripts and some extra C++ files that should be retrieved too, but you are not using our `include(user/block/script)` convention (And I'm not going to change your sources), so this dependency retrieving does not work directly.
+
+However, biicode allows you to specify dependencies manually in the `biicode.conf` file, the configuration file of the block:
 
 ```
 [dependencies]
@@ -63,15 +64,15 @@ However biicode allows you to specify dependencies manually in the `biicode.conf
     # *.h + *.cpp
     oo-cmake.cmake + build/* cmake/* resources/* src/*
 ```
-In our case, I specified explicitly that `oo-cmake.cmake` depends on the contents of the `build/`, `cmake/`, `resources/`, and `test/` folders. Now biicode will download that folders when the ` oo-cmake.cmake` file is used.
+In our case, I specified explicitly that `oo-cmake.cmake` depends on the contents of the `build/`, `cmake/`, `resources/`, and `src/` folders. Now biicode will download that folders when the ` oo-cmake.cmake` file is used.
 
 ### CMakeLists.txt
 
 Each biicode block has it's own `CMakeLists.txt` with building configuration. If no CMakeLists.txt is provided, biicode generates one. By default biicode searches for any C/C++ file adding it to block targets (Library or executable, depending on the kind of file: Is it a header?, is it a `.cpp` with a `main()` function?, etc). 
 
-This process, done by the ` ADD_BIICODE_TARGETS()` macro, works like a charm with C/C++ libraries, but not with CMake libraries that uses some C/C++ files like yours. We don't want any C/C++ target in the oo-cmake block, we don't even want a target at all since this is designed to be `include()` only. 
+This process, done by the `ADD_BIICODE_TARGETS()` macro, works like a charm with C/C++ libraries, but not with CMake libraries that use some C/C++ files like yours. We don't want any C/C++ target in the oo-cmake block, we don't even want a target at all since this is designed to be `include()`d only. 
 
-So simply add an empty `CMakeLists.txt` to the block. 
+So simply add an empty `CMakeLists.txt` to the block. No `ADD_BIICODE_TARGETS()` call, no targets :)
 
 ### Generating and publishing the block automatically
 
@@ -92,7 +93,7 @@ What I did is to create the block using the web inteface, add the custom `biicod
 
 ``` yaml
 install: 
-- wget http://apt.biicode.com/install.sh && chmod +x install.sh && ./install.sh #
+- wget http://apt.biicode.com/install.sh && chmod +x install.sh && ./install.sh
 - bii setup:cpp
 script:
 - bii init
@@ -111,7 +112,7 @@ deploy:
   skip_cleanup: true #The biicode block is generated during build, don't discard build changes!
 ```
 
-Note that Travis CI supports biicode deployment out of the box, just install the travis gem and run:
+Note that Travis CI supports biicode deployment out of the box, just install the travis gem and run biicode setup inside your project:
 
 ```
 $ gem install travis
@@ -123,11 +124,89 @@ This command will ask you for biicode credentials, some configuration flags, and
 
 ## Accepting changes
 
-This changes can be accepted partially via a pull request. Partially because those changes depend on some configuration based on my project:
+This changes cannot be accepted directly via a pull request, because some changes depend on configuration based on my project:
 
  - **The biicode block is published and owned by my account**: All the examples described above use my ` manu343726` account, and the block is `manu343726/oo-cmake`. If you accept this proposal I suppose that you want your own biicode account and to release the oo-cmake with it. That said, I have no problem with owning the block, but this is not possible if you merge the proposal into your project (See next point).
 
  - **The travis encryption is based on my project**. Travis encryption does not work across forks. So even if you like to deploy the library to biicode using my account, the deploy will not work since you need my password to publish the block. 
+
+As I said previously, I tried not to modify your sources. Actually, this is [the diff between my fork and your `master` branch](https://github.com/Manu343726/oo-cmake/compare/toeb:master...master):
+
+``` diff
+@@ -3,24 +3,22 @@ os:
+  - linux
+  - osx
+ compiler:
+-  - gcc
++ - gcc
+ matrix:
+   allow_failures:
+-    - os: osx
++   - os: osx
+ #env:
+ # - CMAKE_DIR="v3.0" CMAKE_VERSION="3.0.1"
+ # - CMAKE_DIR="v2.8" CMAKE_VERSION="2.8.12.2"
+-notifications:
+-  slack: fallto:MlnVOMNkx8YopsaSSxqh2Rcr
+ before_install:
+-  - sudo apt-get install cmake
+-  - sudo apt-get install mercurial
+-  - sudo apt-get install git  
+-  - sudo apt-get install subversion
+-  - git config --global user.email "travis-ci@example.com"
+-  - git config --global user.name "Build Server"
+-install:
+-     # install cmake --
++ - sudo apt-get install cmake
++ - sudo apt-get install mercurial
++ - sudo apt-get install git
++ - sudo apt-get install subversion
++ - git config --global user.email "travis-ci@example.com"
++ - git config --global user.name "Build Server"
++install: 
++    # install cmake --
+     #- wget "http://www.cmake.org/files/${CMAKE_DIR}/cmake-${CMAKE_VERSION}.tar.gz"
+     #- tar xf "cmake-${CMAKE_VERSION}.tar.gz"
+     #- cmake -Hcmake-${CMAKE_VERSION} -B_builds -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="`pwd`/_install"
+ @@ -31,12 +29,26 @@ install:
+     #- which cmake
+     #- cmake --version    
+     # -- end
+-script: "cmake -P build/script.cmake"
+-after_success: "cmake -P build/after_success.cmake"
+-after_failure: "cmake -P build/after_failure.cmake"
+-after_script: "cmake -P build/after_script.cmake"
++ - wget http://apt.biicode.com/install.sh && chmod +x install.sh && ./install.sh
++ - bii setup:cpp
++script:
++ - bii init
++ - bii open manu343726/oo-cmake
++ - echo "" > blocks/manu343726/oo-cmake/CMakeLists.txt #Empty CMakeLists.txt to override default biicode one
++ - rsync -av --exclude="blocks" --exclude="bii" --exclude=".git" --exclude=".gitignore" . blocks/manu343726/oo-cmake
++ - cmake -P build/script.cmake
++after_success: cmake -P build/after_success.cmake
++after_failure: cmake -P build/after_failure.cmake
++after_script: cmake -P build/after_script.cmake
++
++deploy:
++  provider: biicode
++  user: manu343726
++  password:
++    secure: ZBdHcI8HEKMSBZbx5xWT5d7iIzm6db8YDibt7TNC9xM3B30+/D+oFXkvMquxp2cYuhhU2cX+IAwLA4AhJmbYzDvUHnIA+7fJjO8DFngf933cv7lO+Wu/pbEN9gmn/nNxR9zZ1kQfH627gWaehq0MQEhXyLebTzDjY3u1h55PIpU=
++  skip_cleanup: true #The biicode block is generated during build, don't discard build changes!
+ 
+ # branches:
+ #   only:
+ #     - master
+-#     - devel
++#     - devel
+```
+
+*There are changes on the `README.md` too, the travis badge points to my builds, there's a cool biicode badge I generated with [shields.io](http://shields.io/), etc.*  
+
+Since you have to perform some steps to accept this changes, not only to accept `.travis.yml` changes, I decided to put this as an issue with everything explained in depth instead of a pull request.
+
+Let's see how you can setup your project to deploy a biicode block automatically:
 
 ### How to create your oo-cmake block
 
